@@ -59,12 +59,19 @@ def diquxian_rename(path, year):
                 index = cell.find('自治州') + 3
             elif cell.find('行政区划') >= 0:
                 index = cell.find('行政区划') + 4
+            elif cell.find('行政单位') >= 0:
+                index = cell.find('行政单位') + 4
             elif cell.find('地区') >= 0:
                 index = cell.find('地区') + 2
+            elif cell.find('市辖区') >= 0:
+                 if cell[:cell.find('市辖区')].find('市') >= 0:
+                     index = cell.find('市辖区')
+                 else:
+                     index = cell.find('市辖区') + 3
             elif cell.find('市') >= 0:
                 index = cell.find('市') + 1
             else:
-                pass
+                index = -3
         prov = cell[:index]
         print(prov)
         rename_new = path + '/' + prov + rename_form + '.xls'
@@ -89,9 +96,9 @@ def check_sheng(path):
 
 
 
-path = 'C:/Users/51694/Desktop/数据/2012/地区市区级'
+path = 'C:/Users/51694/Desktop/数据/2006/部门'
 
 
 
 # check(path)
-diquxian_rename(path, 2012)
+bumen_rename(path, 2006)
