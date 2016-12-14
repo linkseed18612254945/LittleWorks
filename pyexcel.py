@@ -1,7 +1,8 @@
-import xlrd, xlwt
+import time
 import os
 import win32com.client
-import shutil
+
+
 
 
 def excel_create(visible):
@@ -11,8 +12,9 @@ def excel_create(visible):
     return xl
 
 if __name__ == '__main__':
-    base_path = r'C:\Users\51694\PycharmProjects\LittleWorks\薪酬数据'
-    error_path = r'C:\Users\51694\PycharmProjects\LittleWorks\error_num.txt'
+    start_time = time.time()
+    base_path = r'C:\Users\Administrator\PycharmProjects\LittleWorks\data'
+    error_path = r'C:\Users\Administrator\PycharmProjects\LittleWorks\error_num.txt'
     file_ids = os.listdir(base_path)
     count = 0
     write_row = 1
@@ -49,6 +51,9 @@ if __name__ == '__main__':
         w_worksheet.Range(w_worksheet.Cells(top, 5), w_worksheet.Cells(bottom, 5)).Value = id_col
         r_application.Application.Quit()
         print('Processing: ' + str(count) + ' files' + ' ,' + id)
+        if count % 20 == 0:
+            runtime = time.time() - start_time
+            print('Program has run %.2f s' % runtime)
         if count == 500:
             print('--------------------Processed 500files------------------------')
             count = 0
@@ -59,8 +64,10 @@ if __name__ == '__main__':
             print(sheet)
             w_worksheet = w_workbook.Worksheets(sheet)
             w_worksheet.Range(w_worksheet.Cells(1, 1), w_worksheet.Cells(1, 5)).Value = form_title
-    w_workbook.SaveAs(Filename=r'C:\Users\51694\PycharmProjects\LittleWorks\output.xlsx')
-    w_application.Application.Quit()
+    runtime = time.time() - start_time
+    print('Program total run %.2f s' % runtime)
+    w_workbook.SaveAs(Filename=r'C:\Users\Administrator\PycharmProjects\LittleWorks\output.xlsx')
+    # w_application.Application.Quit()
 
 
 
